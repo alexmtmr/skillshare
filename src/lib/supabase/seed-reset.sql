@@ -85,7 +85,7 @@ VALUES
     'One of my living room outlets sparks every time I plug something in. It''s an older two-prong outlet. No breaker trips but I''m worried about fire risk. The outlet plate feels slightly warm to the touch. Should I stop using it? Need someone to walk me through checking this.',
     'electrical',
     'high',
-    ARRAY['https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop'],
+    ARRAY['https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&h=400&fit=crop'],
     'open',
     now() - interval '5 hours'
   ),
@@ -151,7 +151,7 @@ VALUES
     'Every door in my house squeaks and it''s driving me crazy. I heard WD-40 isn''t actually the best for hinges. What should I use instead? Some hinges look rusty — should I replace those entirely? Looking for the proper technique.',
     'general',
     'low',
-    ARRAY['https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop'],
+    ARRAY['https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&h=400&fit=crop'],
     'open',
     now() - interval '3 days'
   )

@@ -50,7 +50,7 @@ VALUES
     'electrical',
     'high',
     ARRAY[
-      'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop'
+      'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&h=400&fit=crop'
     ],
     'open',
     now() - interval '5 hours'
@@ -129,7 +129,7 @@ VALUES
     'general',
     'low',
     ARRAY[
-      'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop'
+      'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&h=400&fit=crop'
     ],
     'open',
     now() - interval '3 days'
