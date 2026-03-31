@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -10,6 +11,7 @@ import {
   CalendarCheck,
   Bell,
   User,
+  Settings,
 } from "lucide-react";
 
 const navItems = [
@@ -33,7 +35,14 @@ export function Sidebar({ creditsBalance, unreadCount, isAdmin }: SidebarProps) 
 
   return (
     <aside className="hidden md:flex flex-col w-60 h-full bg-surface border-r border-divider shrink-0">
-      <div className="px-8 py-8">
+      <div className="px-8 py-8 flex items-center gap-0.5">
+        <Image
+          src="/logo.png"
+          alt="Skillshare logo"
+          width={36}
+          height={36}
+          className="rounded-lg"
+        />
         <h1 className="text-2xl font-bold tracking-tight text-primary">
           Skillshare
         </h1>
@@ -68,15 +77,31 @@ export function Sidebar({ creditsBalance, unreadCount, isAdmin }: SidebarProps) 
         })}
       </nav>
 
+      <div className="px-4 mb-1">
+        <Link
+          href="/settings"
+          className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-sm font-semibold ${
+            pathname.startsWith("/settings")
+              ? "bg-primary text-white"
+              : "text-text-secondary hover:bg-background"
+          }`}
+        >
+          <Settings className="w-5 h-5" />
+          <span>{t("settings")}</span>
+        </Link>
+      </div>
+
       <div className="p-6">
-        <div className="p-4 bg-background rounded-lg">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">
-            Current Balance
-          </p>
-          <p className="text-xl font-bold text-primary mt-1">
-            {creditsBalance} Credits
-          </p>
-        </div>
+        <Link href="/credits" className="block">
+          <div className="p-4 bg-background rounded-lg hover:bg-divider transition-colors cursor-pointer">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">
+              Current Balance
+            </p>
+            <p className="text-xl font-bold text-primary mt-1">
+              {creditsBalance} Credits
+            </p>
+          </div>
+        </Link>
       </div>
     </aside>
   );

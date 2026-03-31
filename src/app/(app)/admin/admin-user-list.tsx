@@ -5,7 +5,8 @@ import { Star } from "lucide-react";
 
 interface UserProfile {
   id: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   role: string;
   credits_balance: number;
@@ -33,12 +34,12 @@ export function AdminUserList({ users }: { users: UserProfile[] }) {
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
                 <span className="text-xs font-bold text-primary">
-                  {user.name?.charAt(0)?.toUpperCase() || "?"}
+                  {user.first_name?.charAt(0)?.toUpperCase() || "?"}
                 </span>
               </div>
               <div>
                 <p className="text-sm font-semibold text-primary">
-                  {user.name || "No name"}
+                  {[user.first_name, user.last_name].filter(Boolean).join(" ") || "No name"}
                 </p>
                 <p className="text-xs text-text-secondary">{user.email}</p>
               </div>

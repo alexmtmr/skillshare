@@ -14,7 +14,7 @@ export default async function BrowsePage() {
   // Fetch all open posts (filtering happens client-side)
   const { data: posts } = await supabase
     .from("posts")
-    .select("*, profiles(name, rating_avg, avatar_url)")
+    .select("*, profiles(first_name, last_name, rating_avg, avatar_url)")
     .eq("status", "open")
     .neq("user_id", user.id)
     .order("created_at", { ascending: false });

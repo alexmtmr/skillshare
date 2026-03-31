@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/layout/top-bar";
 import { Card } from "@/components/ui/card";
+import { CreditBalance } from "./credit-balance";
 import { CreditStoreTiers } from "./credit-store-tiers";
 
 export default async function CreditsPage() {
@@ -30,14 +31,7 @@ export default async function CreditsPage() {
       <TopBar title="Credit Store" />
       <div className="p-6 md:p-10 max-w-3xl mx-auto w-full space-y-8">
         {/* Balance */}
-        <Card className="bg-primary text-white border-none text-center">
-          <p className="text-sm opacity-70 uppercase tracking-widest font-bold">
-            Your Balance
-          </p>
-          <p className="text-4xl font-bold mt-2">
-            {profile?.credits_balance ?? 0} Credits
-          </p>
-        </Card>
+        <CreditBalance balance={profile?.credits_balance ?? 0} />
 
         {/* Purchase Tiers */}
         <CreditStoreTiers userId={user.id} />

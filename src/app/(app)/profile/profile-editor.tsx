@@ -16,7 +16,8 @@ export function ProfileEditor({ profile }: { profile: Profile }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const [name, setName] = useState(profile.name);
+  const [firstName, setFirstName] = useState(profile.first_name);
+  const [lastName, setLastName] = useState(profile.last_name);
   const [bio, setBio] = useState(profile.bio || "");
   const [role, setRole] = useState<UserRole>(profile.role);
   const [skills, setSkills] = useState<PostCategory[]>(
@@ -33,7 +34,8 @@ export function ProfileEditor({ profile }: { profile: Profile }) {
     const { error } = await supabase
       .from("profiles")
       .update({
-        name: name.trim(),
+        first_name: firstName.trim(),
+        last_name: lastName.trim(),
         bio: bio.trim() || null,
         role,
         skills,
@@ -53,7 +55,8 @@ export function ProfileEditor({ profile }: { profile: Profile }) {
   }
 
   function handleCancel() {
-    setName(profile.name);
+    setFirstName(profile.first_name);
+    setLastName(profile.last_name);
     setBio(profile.bio || "");
     setRole(profile.role);
     setSkills((profile.skills || []) as PostCategory[]);
@@ -62,6 +65,8 @@ export function ProfileEditor({ profile }: { profile: Profile }) {
     setError("");
   }
 
+  const fullName = [profile.first_name, profile.last_name].filter(Boolean).join(" ") || "Anonymous";
+
   if (!editing) {
     return (
       <Card>
@@ -69,16 +74,16 @@ export function ProfileEditor({ profile }: { profile: Profile }) {
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center shrink-0 overflow-hidden">
               {profile.avatar_url ? (
-                <img src={profile.avatar_url} alt={profile.name} className="w-full h-full object-cover" />
+                <img src={profile.avatar_url} alt={fullName} className="w-full h-full object-cover" />
               ) : (
                 <span className="text-xl font-bold text-primary">
-                  {profile.name?.charAt(0)?.toUpperCase() || "?"}
+                  {profile.first_name?.charAt(0)?.toUpperCase() || "?"}
                 </span>
               )}
             </div>
             <div>
               <h2 className="text-xl font-bold text-primary">
-                {profile.name || "Anonymous"}
+                {fullName}
               </h2>
               {profile.bio && (
                 <p className="text-sm text-text-secondary mt-0.5">
@@ -143,7 +148,7 @@ export function ProfileEditor({ profile }: { profile: Profile }) {
                 <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
               ) : (
                 <span className="text-xl font-bold text-primary">
-                  {name?.charAt(0)?.toUpperCase() || "?"}
+                  {firstName?.charAt(0)?.toUpperCase() || "?"}
                 </span>
               )}
             </div>
@@ -183,12 +188,20 @@ export function ProfileEditor({ profile }: { profile: Profile }) {
           </div>
         </div>
 
-        <Input
-          label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Your name"
-        />
+        <div className="grid grid-cols-2 gap-3">
+          <Input
+            label="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First name"
+          />
+          <Input
+            label="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Last name"
+          />
+        </div>
 
         <div>
           <label className="block text-sm font-medium text-text-primary mb-1.5">
@@ -243,7 +256,7 @@ export function ProfileEditor({ profile }: { profile: Profile }) {
           <Button
             onClick={handleSave}
             loading={loading}
-            disabled={!name.trim()}
+            disabled={!firstName.trim()}
             className="flex-1"
           >
             <Check className="w-4 h-4" />

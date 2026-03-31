@@ -21,7 +21,8 @@
     "post": "Post",
     "sessions": "Sessions",
     "notifications": "Alerts",
-    "profile": "Profile"
+    "profile": "Profile",
+    "settings": "Settings"
   },
   "auth": {
     "login": "Log In",
@@ -40,8 +41,10 @@
     "step3Title": "How will you use Skillshare?",
     "step4Title": "What are your skills?",
     "step5Title": "Welcome to Skillshare!",
-    "nameLabel": "Your name",
-    "namePlaceholder": "Enter your full name",
+    "firstNameLabel": "First name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastNameLabel": "Last name",
+    "lastNamePlaceholder": "Enter your last name",
     "avatarLabel": "Profile photo",
     "avatarUpload": "Upload a photo",
     "roleSeeker": "I need help",
@@ -153,5 +156,27 @@
     "appliances": "Appliances",
     "heating": "Heating",
     "general": "General"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languageDesc": "Choose your preferred language",
+    "english": "English",
+    "german": "Deutsch",
+    "changePassword": "Change Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordChanged": "Password changed successfully",
+    "notificationPrefs": "Notification Preferences",
+    "emailNotifications": "Email notifications",
+    "emailNotificationsDesc": "Receive email updates about help offers and sessions",
+    "account": "Account",
+    "logOut": "Log Out",
+    "logOutConfirm": "Are you sure you want to log out?",
+    "deleteAccount": "Delete Account",
+    "deleteAccountDesc": "Permanently delete your account and all data. This cannot be undone.",
+    "deleteConfirm": "Are you sure? This will permanently delete your account.",
+    "dangerZone": "Danger Zone"
   }
 }

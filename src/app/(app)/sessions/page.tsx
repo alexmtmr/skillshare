@@ -15,7 +15,7 @@ export default async function SessionsPage() {
 
   const { data: sessions } = await supabase
     .from("sessions")
-    .select("*, posts(title, category), profiles!sessions_giver_id_fkey(name), seeker:profiles!sessions_seeker_id_fkey(name)")
+    .select("*, posts(title, category), profiles!sessions_giver_id_fkey(first_name, last_name), seeker:profiles!sessions_seeker_id_fkey(first_name, last_name)")
     .or(`seeker_id.eq.${user.id},giver_id.eq.${user.id}`)
     .order("created_at", { ascending: false });
 
@@ -41,9 +41,12 @@ export default async function SessionsPage() {
     if (!session) return null;
     const StatusIcon = statusIcons[session.status] || Calendar;
     const isSeeker = session.seeker_id === user!.id;
-    const otherName = isSeeker
-      ? (session.profiles as { name: string } | null)?.name
-      : (session.seeker as { name: string } | null)?.name;
+    const otherProfile = isSeeker
+      ? (session.profiles as { first_name: string; last_name: string } | null)
+      : (session.seeker as { first_name: string; last_name: string } | null);
+    const otherName = otherProfile
+      ? [otherProfile.first_name, otherProfile.last_name].filter(Boolean).join(" ")
+      : null;
 
     return (
       <Link key={session.id} href={`/sessions/${session.id}`}>

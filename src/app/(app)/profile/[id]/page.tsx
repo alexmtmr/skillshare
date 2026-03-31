@@ -49,7 +49,7 @@ export default async function PublicProfilePage({
   // Get ratings for this user
   const { data: ratings } = await supabase
     .from("ratings")
-    .select("*, profiles!ratings_rater_id_fkey(name)")
+    .select("*, profiles!ratings_rater_id_fkey(first_name, last_name)")
     .eq("rated_id", id)
     .order("created_at", { ascending: false })
     .limit(10);
@@ -86,18 +86,18 @@ export default async function PublicProfilePage({
               {profile.avatar_url ? (
                 <img
                   src={profile.avatar_url}
-                  alt={profile.name}
+                  alt={[profile.first_name, profile.last_name].filter(Boolean).join(" ")}
                   className="w-16 h-16 rounded-full object-cover"
                 />
               ) : (
                 <span className="text-xl font-bold text-primary">
-                  {profile.name?.charAt(0)?.toUpperCase() || "?"}
+                  {profile.first_name?.charAt(0)?.toUpperCase() || "?"}
                 </span>
               )}
             </div>
             <div>
               <h2 className="text-xl font-bold text-primary">
-                {profile.name || "Anonymous"}
+                {[profile.first_name, profile.last_name].filter(Boolean).join(" ") || "Anonymous"}
               </h2>
               {profile.bio && (
                 <p className="text-sm text-text-secondary mt-0.5">
@@ -189,8 +189,10 @@ export default async function PublicProfilePage({
                       )}
                       <p className="text-xs text-text-secondary mt-1">
                         by{" "}
-                        {(rating.profiles as { name: string } | null)?.name ??
-                          "Anonymous"}{" "}
+                        {(() => {
+                          const p = rating.profiles as { first_name: string; last_name: string } | null;
+                          return p ? [p.first_name, p.last_name].filter(Boolean).join(" ") || "Anonymous" : "Anonymous";
+                        })()}{" "}
                         ·{" "}
                         {new Date(rating.created_at).toLocaleDateString()}
                       </p>

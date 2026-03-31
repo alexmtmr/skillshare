@@ -16,13 +16,13 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 -- Profiles for the demo users
-INSERT INTO public.profiles (id, email, name, bio, skills, rating_avg, credits_balance, role)
+INSERT INTO public.profiles (id, email, first_name, last_name, bio, skills, rating_avg, credits_balance, role)
 VALUES
-  ('a1111111-1111-1111-1111-111111111111', 'maria.demo@skillshare.test', 'Maria Schmidt', 'DIY enthusiast, love fixing things around the house', ARRAY['plumbing', 'general'], 4.5, 8, 'both'),
-  ('b2222222-2222-2222-2222-222222222222', 'thomas.demo@skillshare.test', 'Thomas Weber', 'Retired electrician with 30 years of experience', ARRAY['electrical', 'heating'], 4.8, 15, 'both'),
-  ('c3333333-3333-3333-3333-333333333333', 'sarah.demo@skillshare.test', 'Sarah Chen', 'First-time homeowner learning as I go', ARRAY['general'], 3.9, 5, 'seeker'),
-  ('d4444444-4444-4444-4444-444444444444', 'james.demo@skillshare.test', 'James Murphy', 'Appliance repair tech, happy to help', ARRAY['appliances', 'electrical'], 4.7, 20, 'giver'),
-  ('e5555555-5555-5555-5555-555555555555', 'lisa.demo@skillshare.test', 'Lisa Braun', 'Plumber by trade, homeowner by heart', ARRAY['plumbing', 'heating'], 4.2, 12, 'both')
+  ('a1111111-1111-1111-1111-111111111111', 'maria.demo@skillshare.test', 'Maria', 'Schmidt', 'DIY enthusiast, love fixing things around the house', ARRAY['plumbing', 'general'], 4.5, 8, 'both'),
+  ('b2222222-2222-2222-2222-222222222222', 'thomas.demo@skillshare.test', 'Thomas', 'Weber', 'Retired electrician with 30 years of experience', ARRAY['electrical', 'heating'], 4.8, 15, 'both'),
+  ('c3333333-3333-3333-3333-333333333333', 'sarah.demo@skillshare.test', 'Sarah', 'Chen', 'First-time homeowner learning as I go', ARRAY['general'], 3.9, 5, 'seeker'),
+  ('d4444444-4444-4444-4444-444444444444', 'james.demo@skillshare.test', 'James', 'Murphy', 'Appliance repair tech, happy to help', ARRAY['appliances', 'electrical'], 4.7, 20, 'giver'),
+  ('e5555555-5555-5555-5555-555555555555', 'lisa.demo@skillshare.test', 'Lisa', 'Braun', 'Plumber by trade, homeowner by heart', ARRAY['plumbing', 'heating'], 4.2, 12, 'both')
 ON CONFLICT (id) DO NOTHING;
 
 -- Example posts with placeholder images from picsum.photos

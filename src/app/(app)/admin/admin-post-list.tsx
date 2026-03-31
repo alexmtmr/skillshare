@@ -13,7 +13,7 @@ interface PostWithProfile {
   urgency: string;
   status: string;
   created_at: string;
-  profiles: { name: string } | null;
+  profiles: { first_name: string; last_name: string } | null;
 }
 
 export function AdminPostList({ posts }: { posts: PostWithProfile[] }) {
@@ -80,7 +80,7 @@ export function AdminPostList({ posts }: { posts: PostWithProfile[] }) {
                 {post.status}
               </span>
               <span className="text-xs text-text-secondary">
-                by {post.profiles?.name ?? "Unknown"}
+                by {post.profiles ? [post.profiles.first_name, post.profiles.last_name].filter(Boolean).join(" ") : "Unknown"}
               </span>
             </div>
           </div>

@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { TopBar } from "@/components/layout/top-bar";
 import { Card } from "@/components/ui/card";
-import { Star, Calendar, Coins } from "lucide-react";
+import { Star, Calendar, Coins, Mail } from "lucide-react";
 import { ProfileEditor } from "./profile-editor";
 
 export default async function ProfilePage() {
@@ -23,7 +23,7 @@ export default async function ProfilePage() {
 
   const { data: ratings } = await supabase
     .from("ratings")
-    .select("*, profiles!ratings_rater_id_fkey(name)")
+    .select("*, profiles!ratings_rater_id_fkey(first_name, last_name)")
     .eq("rated_id", user.id)
     .order("created_at", { ascending: false })
     .limit(10);
@@ -39,6 +39,21 @@ export default async function ProfilePage() {
       <div className="p-6 md:p-10 max-w-2xl mx-auto w-full space-y-6">
         {/* Editable Profile */}
         <ProfileEditor profile={profile} />
+
+        {/* Account Email */}
+        <Card className="flex items-center gap-3">
+          <div className="p-2 bg-secondary/10 rounded-lg">
+            <Mail className="w-5 h-5 text-secondary" />
+          </div>
+          <div>
+            <p className="text-[10px] text-text-secondary uppercase font-bold">
+              Signed in as
+            </p>
+            <p className="text-sm font-medium text-primary">
+              {profile.email}
+            </p>
+          </div>
+        </Card>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4">
@@ -98,7 +113,7 @@ export default async function ProfilePage() {
                         </p>
                       )}
                       <p className="text-xs text-text-secondary mt-1">
-                        by {(rating.profiles as { name: string } | null)?.name ?? "Anonymous"} ·{" "}
+                        by {(() => { const p = rating.profiles as { first_name: string; last_name: string } | null; return p ? [p.first_name, p.last_name].filter(Boolean).join(" ") || "Anonymous" : "Anonymous"; })()} ·{" "}
                         {new Date(rating.created_at).toLocaleDateString()}
                       </p>
                     </div>

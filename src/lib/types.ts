@@ -48,7 +48,8 @@ export type NotificationType =
 export interface Profile {
   id: string;
   email: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   avatar_url: string | null;
   bio: string | null;
   skills: PostCategory[];

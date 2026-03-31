@@ -34,7 +34,7 @@ export default async function SessionPage({
     session.seeker_id === user.id ? session.giver_id : session.seeker_id;
   const { data: otherProfile } = await supabase
     .from("profiles")
-    .select("name, avatar_url")
+    .select("first_name, last_name, avatar_url")
     .eq("id", otherId)
     .single();
 
@@ -47,13 +47,16 @@ export default async function SessionPage({
     .single();
 
   const isSeeker = session.seeker_id === user.id;
+  const otherName = otherProfile
+    ? [otherProfile.first_name, otherProfile.last_name].filter(Boolean).join(" ") || "Unknown"
+    : "Unknown";
 
   return (
     <>
       <TopBar title="Session" />
       <SessionClient
         session={session}
-        otherName={otherProfile?.name ?? "Unknown"}
+        otherName={otherName}
         isSeeker={isSeeker}
         userId={user.id}
         hasRated={!!existingRating}

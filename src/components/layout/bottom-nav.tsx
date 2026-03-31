@@ -9,6 +9,7 @@ import {
   PlusCircle,
   Bell,
   User,
+  Settings,
 } from "lucide-react";
 
 const navItems = [
@@ -17,6 +18,7 @@ const navItems = [
   { href: "/posts/create", icon: PlusCircle, labelKey: "post" },
   { href: "/notifications", icon: Bell, labelKey: "notifications" },
   { href: "/profile", icon: User, labelKey: "profile" },
+  { href: "/settings", icon: Settings, labelKey: "settings" },
 ];
 
 interface BottomNavProps {

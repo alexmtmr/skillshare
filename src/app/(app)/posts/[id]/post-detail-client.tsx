@@ -19,7 +19,8 @@ import type { Post, TimeSlot, ConnectionRequest } from "@/lib/types";
 
 interface PostWithProfile extends Post {
   profiles: {
-    name: string;
+    first_name: string;
+    last_name: string;
     rating_avg: number;
     avatar_url: string | null;
     created_at: string;
@@ -34,7 +35,8 @@ interface PendingRequest {
   status: string;
   created_at: string;
   profiles: {
-    name: string;
+    first_name: string;
+    last_name: string;
     rating_avg: number;
     avatar_url: string | null;
     skills: string[];
@@ -73,7 +75,7 @@ export function PostDetailClient({
   const [acceptingId, setAcceptingId] = useState<string | null>(null);
   const [decliningId, setDecliningId] = useState<string | null>(null);
 
-  const seekerName = post.profiles?.name || "Anonymous";
+  const seekerName = [post.profiles?.first_name, post.profiles?.last_name].filter(Boolean).join(" ") || "Anonymous";
   const seekerRating = Number(post.profiles?.rating_avg || 0);
   const memberSince = post.profiles?.created_at
     ? new Date(post.profiles.created_at).toLocaleDateString("en-US", {
@@ -459,13 +461,13 @@ export function PostDetailClient({
                     >
                       <div className="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center shrink-0">
                         <span className="text-sm font-bold text-secondary">
-                          {request.profiles.name?.charAt(0)?.toUpperCase() ||
+                          {request.profiles.first_name?.charAt(0)?.toUpperCase() ||
                             "?"}
                         </span>
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-primary">
-                          {request.profiles.name}
+                          {[request.profiles.first_name, request.profiles.last_name].filter(Boolean).join(" ")}
                         </p>
                         <div className="flex items-center gap-2">
                           {Number(request.profiles.rating_avg) > 0 && (

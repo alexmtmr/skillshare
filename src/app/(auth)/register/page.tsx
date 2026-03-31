@@ -29,7 +29,8 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
 
   // Step 2: Profile
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   // Step 3: Role
   const [role, setRole] = useState<UserRole>("both");
@@ -47,7 +48,7 @@ export default function RegisterPage() {
       email,
       password,
       options: {
-        data: { name },
+        data: { first_name: firstName, last_name: lastName },
       },
     });
 
@@ -79,7 +80,8 @@ export default function RegisterPage() {
     const { error } = await supabase
       .from("profiles")
       .update({
-        name,
+        first_name: firstName.trim(),
+        last_name: lastName.trim(),
         role,
         skills: role === "seeker" ? [] : skills,
       })
@@ -166,11 +168,19 @@ export default function RegisterPage() {
                 {t("registration.step2Title")}
               </h2>
               <Input
-                label={t("registration.nameLabel")}
+                label={t("registration.firstNameLabel")}
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={t("registration.namePlaceholder")}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder={t("registration.firstNamePlaceholder")}
+                required
+              />
+              <Input
+                label={t("registration.lastNameLabel")}
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                placeholder={t("registration.lastNamePlaceholder")}
                 required
               />
               {error && (
@@ -182,7 +192,7 @@ export default function RegisterPage() {
                 </Button>
                 <Button
                   onClick={handleNext}
-                  disabled={!name.trim()}
+                  disabled={!firstName.trim() || !lastName.trim()}
                   className="flex-1"
                 >
                   {t("common.next")}

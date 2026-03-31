@@ -60,14 +60,14 @@ export default async function DashboardPage() {
     giver_id: string;
     message: string | null;
     created_at: string;
-    profiles: { name: string; rating_avg: number };
+    profiles: { first_name: string; last_name: string; rating_avg: number };
     posts: { title: string };
   }> = [];
 
   if (myPostIds.length > 0) {
     const { data } = await supabase
       .from("connection_requests")
-      .select("*, profiles!connection_requests_giver_id_fkey(name, rating_avg), posts(title)")
+      .select("*, profiles!connection_requests_giver_id_fkey(first_name, last_name, rating_avg), posts(title)")
       .in("post_id", myPostIds)
       .eq("status", "pending")
       .order("created_at", { ascending: false })
@@ -76,26 +76,28 @@ export default async function DashboardPage() {
   }
 
   const nextSession = upcomingSessions?.[0];
-  const displayName = profile?.name || "there";
+  const displayName = profile?.first_name || "there";
 
   return (
     <>
       <TopBar
-        title="Dashboard"
-        subtitle={`Welcome back, ${displayName}.`}
+        title={`Welcome, ${displayName}`}
+        subtitle="Dashboard"
       />
 
       <div className="p-6 md:p-10 space-y-8 max-w-5xl mx-auto w-full">
         {/* Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Credits Card */}
-          <Card className="bg-primary text-white border-none relative overflow-hidden">
-            <Coins className="w-8 h-8 mb-3 opacity-80" />
-            <p className="text-3xl font-bold">
-              {profile?.credits_balance ?? 0}
-            </p>
-            <p className="text-sm opacity-70 mt-1">Credits available</p>
-          </Card>
+          <Link href="/credits">
+            <Card className="!bg-primary text-white !border-none relative overflow-hidden hover:opacity-90 transition-opacity cursor-pointer">
+              <Coins className="w-8 h-8 mb-3 opacity-80" />
+              <p className="text-3xl font-bold">
+                {profile?.credits_balance ?? 0}
+              </p>
+              <p className="text-sm opacity-70 mt-1">Credits available</p>
+            </Card>
+          </Link>
 
           {/* Next Session Card */}
           <Card className="md:col-span-2">
@@ -134,12 +136,12 @@ export default async function DashboardPage() {
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 bg-secondary/10 rounded-full flex items-center justify-center shrink-0">
                         <span className="text-xs font-bold text-secondary">
-                          {offer.profiles.name?.charAt(0)?.toUpperCase() || "?"}
+                          {offer.profiles.first_name?.charAt(0)?.toUpperCase() || "?"}
                         </span>
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-primary">
-                          {offer.profiles.name} wants to help
+                          {[offer.profiles.first_name, offer.profiles.last_name].filter(Boolean).join(" ")} wants to help
                         </p>
                         <p className="text-xs text-text-secondary">
                           on &ldquo;{offer.posts.title}&rdquo;

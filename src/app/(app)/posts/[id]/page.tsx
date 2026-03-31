@@ -18,7 +18,7 @@ export default async function PostDetailPage({
 
   const { data: post } = await supabase
     .from("posts")
-    .select("*, profiles(name, rating_avg, avatar_url, created_at)")
+    .select("*, profiles(first_name, last_name, rating_avg, avatar_url, created_at)")
     .eq("id", id)
     .single();
 
@@ -53,14 +53,14 @@ export default async function PostDetailPage({
     message: string | null;
     status: string;
     created_at: string;
-    profiles: { name: string; rating_avg: number; avatar_url: string | null; skills: string[] };
+    profiles: { first_name: string; last_name: string; rating_avg: number; avatar_url: string | null; skills: string[] };
     time_slots: { date: string; start_time: string; end_time: string };
   }> = [];
 
   if (isOwner) {
     const { data } = await supabase
       .from("connection_requests")
-      .select("*, profiles!connection_requests_giver_id_fkey(name, rating_avg, avatar_url, skills), time_slots(date, start_time, end_time)")
+      .select("*, profiles!connection_requests_giver_id_fkey(first_name, last_name, rating_avg, avatar_url, skills), time_slots(date, start_time, end_time)")
       .eq("post_id", id)
       .eq("status", "pending")
       .order("created_at", { ascending: false });

@@ -8,7 +8,8 @@
 create table public.profiles (
   id uuid references auth.users on delete cascade primary key,
   email text not null,
-  name text not null default '',
+  first_name text not null default '',
+  last_name text not null default '',
   avatar_url text,
   bio text,
   skills text[] default '{}',
@@ -232,11 +233,12 @@ create policy "Authenticated users can insert notifications"
 create or replace function public.handle_new_user()
 returns trigger as $$
 begin
-  insert into public.profiles (id, email, name, credits_balance)
+  insert into public.profiles (id, email, first_name, last_name, credits_balance)
   values (
     new.id,
     new.email,
-    coalesce(new.raw_user_meta_data->>'name', ''),
+    coalesce(new.raw_user_meta_data->>'first_name', ''),
+    coalesce(new.raw_user_meta_data->>'last_name', ''),
     10
   );
   -- Log the signup bonus transaction

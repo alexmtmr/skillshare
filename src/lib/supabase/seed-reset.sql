@@ -34,26 +34,27 @@ DELETE FROM auth.users WHERE id IN (
 
 INSERT INTO auth.users (id, email, instance_id, aud, role, encrypted_password, email_confirmed_at, created_at, updated_at, confirmation_token, recovery_token, raw_user_meta_data)
 VALUES
-  ('a1111111-1111-1111-1111-111111111111', 'maria.schmidt@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '45 days', now(), '', '', '{"name": "Maria Schmidt"}'::jsonb),
-  ('b2222222-2222-2222-2222-222222222222', 'thomas.weber@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '30 days', now(), '', '', '{"name": "Thomas Weber"}'::jsonb),
-  ('c3333333-3333-3333-3333-333333333333', 'sarah.chen@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '20 days', now(), '', '', '{"name": "Sarah Chen"}'::jsonb),
-  ('d4444444-4444-4444-4444-444444444444', 'james.murphy@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '60 days', now(), '', '', '{"name": "James Murphy"}'::jsonb),
-  ('e5555555-5555-5555-5555-555555555555', 'lisa.braun@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '15 days', now(), '', '', '{"name": "Lisa Braun"}'::jsonb)
+  ('a1111111-1111-1111-1111-111111111111', 'maria.schmidt@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '45 days', now(), '', '', '{"first_name": "Maria", "last_name": "Schmidt"}'::jsonb),
+  ('b2222222-2222-2222-2222-222222222222', 'thomas.weber@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '30 days', now(), '', '', '{"first_name": "Thomas", "last_name": "Weber"}'::jsonb),
+  ('c3333333-3333-3333-3333-333333333333', 'sarah.chen@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '20 days', now(), '', '', '{"first_name": "Sarah", "last_name": "Chen"}'::jsonb),
+  ('d4444444-4444-4444-4444-444444444444', 'james.murphy@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '60 days', now(), '', '', '{"first_name": "James", "last_name": "Murphy"}'::jsonb),
+  ('e5555555-5555-5555-5555-555555555555', 'lisa.braun@demo.skillshare.com', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', crypt('demo12345', gen_salt('bf')), now(), now() - interval '15 days', now(), '', '', '{"first_name": "Lisa", "last_name": "Braun"}'::jsonb)
 ON CONFLICT (id) DO NOTHING;
 
 -- ============================================
 -- CREATE PROFILES WITH NAMES
 -- ============================================
 
-INSERT INTO public.profiles (id, email, name, bio, skills, rating_avg, credits_balance, role, created_at)
+INSERT INTO public.profiles (id, email, first_name, last_name, bio, skills, rating_avg, credits_balance, role, created_at)
 VALUES
-  ('a1111111-1111-1111-1111-111111111111', 'maria.schmidt@demo.skillshare.com', 'Maria Schmidt', 'DIY enthusiast and weekend warrior. Love tackling home projects!', ARRAY['plumbing', 'general'], 4.5, 8, 'both', now() - interval '45 days'),
-  ('b2222222-2222-2222-2222-222222222222', 'thomas.weber@demo.skillshare.com', 'Thomas Weber', 'Retired electrician, 30 years experience. Happy to help anyone.', ARRAY['electrical', 'heating'], 4.8, 15, 'both', now() - interval '30 days'),
-  ('c3333333-3333-3333-3333-333333333333', 'sarah.chen@demo.skillshare.com', 'Sarah Chen', 'First-time homeowner, learning everything from scratch!', ARRAY['general'], 3.9, 5, 'seeker', now() - interval '20 days'),
-  ('d4444444-4444-4444-4444-444444444444', 'james.murphy@demo.skillshare.com', 'James Murphy', 'Appliance repair technician. If it has a motor, I can fix it.', ARRAY['appliances', 'electrical'], 4.7, 20, 'giver', now() - interval '60 days'),
-  ('e5555555-5555-5555-5555-555555555555', 'lisa.braun@demo.skillshare.com', 'Lisa Braun', 'Licensed plumber and heating specialist. Ask me anything!', ARRAY['plumbing', 'heating'], 4.2, 12, 'both', now() - interval '15 days')
+  ('a1111111-1111-1111-1111-111111111111', 'maria.schmidt@demo.skillshare.com', 'Maria', 'Schmidt', 'DIY enthusiast and weekend warrior. Love tackling home projects!', ARRAY['plumbing', 'general'], 4.5, 8, 'both', now() - interval '45 days'),
+  ('b2222222-2222-2222-2222-222222222222', 'thomas.weber@demo.skillshare.com', 'Thomas', 'Weber', 'Retired electrician, 30 years experience. Happy to help anyone.', ARRAY['electrical', 'heating'], 4.8, 15, 'both', now() - interval '30 days'),
+  ('c3333333-3333-3333-3333-333333333333', 'sarah.chen@demo.skillshare.com', 'Sarah', 'Chen', 'First-time homeowner, learning everything from scratch!', ARRAY['general'], 3.9, 5, 'seeker', now() - interval '20 days'),
+  ('d4444444-4444-4444-4444-444444444444', 'james.murphy@demo.skillshare.com', 'James', 'Murphy', 'Appliance repair technician. If it has a motor, I can fix it.', ARRAY['appliances', 'electrical'], 4.7, 20, 'giver', now() - interval '60 days'),
+  ('e5555555-5555-5555-5555-555555555555', 'lisa.braun@demo.skillshare.com', 'Lisa', 'Braun', 'Licensed plumber and heating specialist. Ask me anything!', ARRAY['plumbing', 'heating'], 4.2, 12, 'both', now() - interval '15 days')
 ON CONFLICT (id) DO UPDATE SET
-  name = EXCLUDED.name,
+  first_name = EXCLUDED.first_name,
+  last_name = EXCLUDED.last_name,
   bio = EXCLUDED.bio,
   skills = EXCLUDED.skills,
   rating_avg = EXCLUDED.rating_avg,

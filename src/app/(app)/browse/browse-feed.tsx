@@ -19,7 +19,8 @@ import type { Post, PostCategory, Urgency } from "@/lib/types";
 
 interface PostWithProfile extends Post {
   profiles: {
-    name: string;
+    first_name: string;
+    last_name: string;
     rating_avg: number;
     avatar_url: string | null;
   };
@@ -382,7 +383,7 @@ export function BrowseFeed({ posts, userId }: BrowseFeedProps) {
                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
                       <span className="text-xs font-bold text-primary">
                         {(
-                          currentPost.profiles?.name || "A"
+                          currentPost.profiles?.first_name || "A"
                         )
                           .charAt(0)
                           .toUpperCase()}
@@ -390,7 +391,7 @@ export function BrowseFeed({ posts, userId }: BrowseFeedProps) {
                     </div>
                     <div>
                       <p className="text-xs font-bold text-primary">
-                        {currentPost.profiles?.name || "Anonymous"}
+                        {[currentPost.profiles?.first_name, currentPost.profiles?.last_name].filter(Boolean).join(" ") || "Anonymous"}
                       </p>
                       {Number(currentPost.profiles?.rating_avg || 0) > 0 && (
                         <div className="flex items-center gap-0.5">
